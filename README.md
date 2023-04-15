@@ -29,3 +29,12 @@ admin@admin.com (Admin)
 a@gmail.com (User)
 123
 ```
+
+
+## Stare mongodb servive
+```
+$ brew services list
+Name              Status  User Plist
+mongodb-community stopped      
+$ brew services start mongodb-community
+```
