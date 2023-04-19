@@ -20,157 +20,162 @@ import {
   PRODUCT_TOPRATED_REQUEST,
   PRODUCT_TOPRATED_SUCCESS,
   PRODUCT_TOPRATED_FAIL,
-} from '../constants/productConstants'
-import productsApi from '../api/productsApi'
+} from "../constants/productConstants";
+import productsApi from "../api/productsApi";
 
 export const listProducts =
-  (keyword = '', pageNumber = '', category = '') =>
+  (keyword = "", pageNumber = "", category = "") =>
   async (dispatch) => {
     try {
-      dispatch({ type: PRODUCT_LIST_REQUEST })
+      dispatch({ type: PRODUCT_LIST_REQUEST });
 
-      const data = await productsApi.getAllProducts(keyword, pageNumber, category)
-
+      const data = await productsApi.getAllProducts(
+        keyword,
+        pageNumber,
+        category
+      );
+      console.log("data from be: ", data);
       dispatch({
         type: PRODUCT_LIST_SUCCESS,
         payload: data,
-      })
+      });
     } catch (error) {
       dispatch({
         type: PRODUCT_LIST_FAIL,
         payload: error.response,
-      })
+      });
     }
-  }
+  };
 
 export const listTopRatedProducts = () => async (dispatch) => {
   try {
-    dispatch({ type: PRODUCT_TOPRATED_REQUEST })
+    dispatch({ type: PRODUCT_TOPRATED_REQUEST });
 
-    const data = await productsApi.getTopRatedProducts()
+    const data = await productsApi.getTopRatedProducts();
 
     dispatch({
       type: PRODUCT_TOPRATED_SUCCESS,
       payload: data,
-    })
+    });
   } catch (error) {
     dispatch({
       type: PRODUCT_TOPRATED_FAIL,
       payload: error.response,
-    })
+    });
   }
-}
+};
 
 export const listProductDetails = (id) => async (dispatch) => {
   try {
-    dispatch({ type: PRODUCT_DETAIL_REQUEST })
+    dispatch({ type: PRODUCT_DETAIL_REQUEST });
 
-    const data = await productsApi.getProduct(id)
+    const data = await productsApi.getProduct(id);
 
     dispatch({
       type: PRODUCT_DETAIL_SUCCESS,
       payload: data,
-    })
+    });
   } catch (error) {
     dispatch({
       type: PRODUCT_DETAIL_FAIL,
       payload: error.response,
-    })
+    });
   }
-}
+};
 
 export const deleteProductById = (id) => async (dispatch, getState) => {
   try {
     dispatch({
       type: PRODUCT_DELETE_REQUEST,
-    })
+    });
 
     const {
       userLogin: { userInfo },
-    } = getState()
+    } = getState();
 
-    await productsApi.deleteProduct(id, userInfo.token)
+    await productsApi.deleteProduct(id, userInfo.token);
 
     dispatch({
       type: PRODUCT_DELETE_SUCCESS,
-    })
+    });
   } catch (err) {
     dispatch({
       type: PRODUCT_DELETE_FAIL,
       payload: err,
-    })
+    });
   }
-}
+};
 
 export const addProduct = (product) => async (dispatch, getState) => {
   try {
     dispatch({
       type: PRODUCT_ADD_REQUEST,
-    })
+    });
 
     const {
       userLogin: { userInfo },
-    } = getState()
+    } = getState();
 
-    const reqBody = { ...product, user: userInfo._id }
+    const reqBody = { ...product, user: userInfo._id };
 
-    await productsApi.addProduct(reqBody, userInfo.token)
+    await productsApi.addProduct(reqBody, userInfo.token);
 
     dispatch({
       type: PRODUCT_ADD_SUCCESS,
-    })
+    });
   } catch (err) {
     dispatch({
       type: PRODUCT_ADD_FAIL,
       payload: err,
-    })
+    });
   }
-}
+};
 
 export const updateProduct = (product) => async (dispatch, getState) => {
   try {
     dispatch({
       type: PRODUCT_UPDATE_REQUEST,
-    })
+    });
 
     const {
       userLogin: { userInfo },
-    } = getState()
+    } = getState();
 
-    const reqBody = { ...product, user: userInfo._id }
+    const reqBody = { ...product, user: userInfo._id };
 
-    await productsApi.updateProduct(reqBody, userInfo.token)
+    await productsApi.updateProduct(reqBody, userInfo.token);
 
     dispatch({
       type: PRODUCT_UPDATE_SUCCESS,
-    })
+    });
   } catch (err) {
     dispatch({
       type: PRODUCT_UPDATE_FAIL,
       payload: err,
-    })
+    });
   }
-}
+};
 
-export const productCreateReview = (productId, review) => async (dispatch, getState) => {
-  try {
-    dispatch({
-      type: PRODUCT_CREATE_REVIEW_REQUEST,
-    })
+export const productCreateReview =
+  (productId, review) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: PRODUCT_CREATE_REVIEW_REQUEST,
+      });
 
-    const {
-      userLogin: { userInfo },
-    } = getState()
+      const {
+        userLogin: { userInfo },
+      } = getState();
 
-    await productsApi.createProductReview(productId, review, userInfo.token)
+      await productsApi.createProductReview(productId, review, userInfo.token);
 
-    dispatch({
-      type: PRODUCT_CREATE_REVIEW_SUCCESS,
-    })
-  } catch (err) {
-    dispatch({
-      type: PRODUCT_CREATE_REVIEW_FAIL,
-      payload: err,
-    })
-  }
-}
+      dispatch({
+        type: PRODUCT_CREATE_REVIEW_SUCCESS,
+      });
+    } catch (err) {
+      dispatch({
+        type: PRODUCT_CREATE_REVIEW_FAIL,
+        payload: err,
+      });
+    }
+  };
